@@ -6,30 +6,36 @@
 <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
 <!--script src="https://rawgit.com/aframevr/aframe/4f0540b/dist/aframe-master.min.js"></script-->
 <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
-  <script src="../js/aframe-mouse-cursor-component.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+
 
 </head>
   <body>
-    <a-scene>
+    <! Habilita o controle com o mouse>
+    <a-scene cursor="rayOrigin: mouse">
+
       <a-assets>
 
-  <a-asset-item id="dblab" src="../3d/2_0.gltf"></a-asset-item>
-<video id="intro" autoplay="true" loop="true" src="../3d/DBLab.webm"></video>
+  <a-asset-item id="dblab" src="../3d/4_0.gltf"></a-asset-item>
+<video id="intro" src="../3d/DBLab.webm"></video>
 </a-assets>
+
+
+<!Camera normal>
+<a-entity  camera look-controls wasd-controls-enabled="false" position="0 1.2 -0.5">
+
+</a-entity>
+
 
     <a-entity id="bg" geometry="primitive: plane" material="color: blue"position="0 0 5"
      sound="src: url(../3d/bg_1.mp3); autoplay: false"></a-entity>
-<! 0.0 1.2764 -2.094      x 0.98  y 0.57>
-  <a-video src="#intro" width="3" height="1.75" scale="0.3 0.3 0.3" position="0.0 1.2764 2.0"></a-video>
 
-      <a-entity laser-controls="hand:  right"></a-entity>
-      <a-entity laser-controls raycaster="objects: .clickable; far: 5"></a-entity>
+  <a-video src="#intro" autoplay="false" loop="true"  width="3" height="1.75" scale="0.3 0.3 0.3" position="0.0 1.2764 2.0"></a-video>
 
 
 
-
-      <a-entity id="room" gltf-model="#dblab"  position="0 0 0"></a-entity>
+      <a-entity id="room" gltf-model="#dblab"  position="0 0 0" animation-mixer="loop:repeat"></a-entity>
 
       <!Teto para baixo>
       <a-light type="directional" position="-2 2 0" rotation="0 0 0" intensity="2.0" target="#directional_0">
@@ -40,60 +46,101 @@
         <a-entity id="directional_1" position="-2 -1 0"></a-entity>
       </a-light>
       <!Centro para Parede TV>
-      <a-light type="directional" position="0.0 1.0 0.0" rotation="0 0 0" intensity="3.0" target="#directional_2">
+      <a-light type="directional" position="0.0 1.0 0.0" rotation="0 0 0" intensity="2.5" target="#directional_2">
         <a-entity id="directional_2" position="0 0 1"></a-entity>
       </a-light>
       <!Centro para Parede Armarinho>
-      <a-light type="directional" position="0.0 1.0 0.0" rotation="0 0 0" intensity="3.0" target="#directional_3">
+      <a-light type="directional" position="0.0 1.0 0.0" rotation="0 0 0" intensity="2.5" target="#directional_3">
         <a-entity id="directional_3" position="0 0 -1"></a-entity>
       </a-light>
       <!Centro para Teto>
-      <a-light type="directional" position="0.0 1.0 0.0" rotation="0 0 0" intensity="3.0" target="#directional_4">
+      <a-light type="directional" position="0.0 1.0 0.0" rotation="0 0 0" intensity="2.0" target="#directional_4">
         <a-entity id="directional_4" position="0 2 0"></a-entity>
       </a-light>
 
-      <a-text value="Bem vindo ao DBLab!" color="#0077be"
-        position="0.16 0.8 -1.8" scale="0.6 0.6 0.6"></a-text>
-
-        <a-text id="temperatura" value="Temperatura" color="#0077be"
-          position="0.16 1.0 -1.8" scale="0.6 0.6 0.6"></a-text>
-
-          <a-text id="umidade" value="Umidade" color="#0077be"
-            position="0.16 1.2 -1.8" scale="0.6 0.6 0.6"></a-text>
-
-            <a-text id="distancia" value="Distancia" color="#0077be"
-              position="0.16 1.4 -1.8" scale="0.6 0.6 0.6"></a-text>
+      <a-text value="Bem vindo ao DBLab!" color="#FF4136"
+        position="-1.0 1.4 -1.85" scale="1.0 1.0 1.0"></a-text>
 
 
 
-      <a-sky color="#ECECEC"></a-sky>
-
-      <a-entity id="rig"
-          movement-controls
-          position="0 1.2 -0.5"
-          rotation="0 180 0">
-  <a-entity camera
 
 
-            look-controls="pointerLockEnabled: false; acceleration: 1" ></a-entity>
-</a-entity>
+
+
+              <!controle video>
+        <a-entity id="controle_video" geometry="primitive: box" material="color: red; opacity: 0.5" position="-0.6 1.0 1.7" scale="0.2 0.2 0.2"  ></a-entity>
+
+        <!controle temperatura>
+  <a-entity id="bot_temp" geometry="primitive: box" material="color: blue; opacity: 0.5" position="0 0.9 0.2" scale="0.2 0.2 0.2"  ></a-entity>
+  <a-text id="temperatura" value="Temperatura" color="#0077be"
+    position="0.2 0.8 0.05" scale="0.6 0.6 0.6" rotation="0 180 0" visible="false"></a-text>
+
+    <!controle umidade>
+    <a-entity id="bot_umidade" geometry="primitive: box" material="color: blue; opacity: 0.5" position="-2.5 1.1 0.85" scale="0.2 0.2 0.2"  ></a-entity>
+    <a-text id="umidade" value="Umidade" color="#0077be"
+      position="-2.5 1.1 0.6" scale="0.8 0.8 0.8" rotation="0 130 0" visible="false"></a-text>
+
+      <!controle distancia>
+      <a-entity id="bot_dist" geometry="primitive: box" material="color: blue; opacity: 0.5" position="2.1 1.1 0.2" scale="0.2 0.2 0.2"  ></a-entity>
+      <a-text id="distancia" value="Distancia" color="#0077be"
+        position="2.1 0.9 -0.5" scale="0.7 0.7 0.7" rotation="0 -90 0" visible="false"></a-text>
+
+
+
 
 
   </a-scene>
 
-    <script>
 
 
-      var targetEl = document.querySelector('#room');
-      targetEl.object3D.scale.set(1, 1, 1);
 
+    <script >
+      var targetElx = document.querySelector('#room');
+      targetElx.object3D.scale.set(1, 1, 1);
     </script>
 
+
+
     <script>
 
-    var info_temperatura = document.querySelector('#temperatura');
-    var info_umidade = document.querySelector('#umidade');
-    var info_distancia = document.querySelector('#distancia');
+
+
+
+    var sceneEl = document.querySelector('a-scene');
+
+    //var cam = sceneEl.querySelector('#camx');
+    //cam.setAttribute('rotation', {x: 15, y: 30, z: 90});
+
+    var controle_vid = sceneEl.querySelector('#controle_video');
+    var video_lab = sceneEl.querySelector('#intro');
+
+    controle_vid.addEventListener('click', function () {
+
+
+
+    //video_lab.setAttribute('autoplay', 'true');
+    if(video_lab.paused !== true){
+    video_lab.pause();
+    controle_vid.setAttribute('material', 'color: red');
+  } else {
+    video_lab.play();
+    controle_vid.setAttribute('material', 'color: green');
+  }
+    });
+
+</script>
+
+
+
+
+
+<script>
+
+
+
+    var info_temperatura = sceneEl.querySelector('#temperatura');
+    var info_umidade = sceneEl.querySelector('#umidade');
+    var info_distancia = sceneEl.querySelector('#distancia');
     // Create a client instance
     //client = new Paho.MQTT.Client("177.99.211.82", 30076, "clientId");
     client = new Paho.MQTT.Client("iot.eclipse.org", 443, new Date().toString());
@@ -107,6 +154,7 @@
       timeout: 3,
       onSuccess: onConnect
     }
+
 
     // connect the client
     client.connect(options);
@@ -140,9 +188,38 @@ function onMessageArrived(message) {
     message = message.split('Dist: ').join('');
     message = message.split('mm').join('');
     info_distancia.setAttribute('value', "" + message + "mm");
-  }else{
   }
 }
+
+  var b_temp = sceneEl.querySelector('#bot_temp');
+  b_temp.addEventListener('mouseenter', function () {
+    info_temperatura.setAttribute('visible', "true");
+    b_temp.setAttribute('material','color:white');
+  });
+  b_temp.addEventListener('mouseleave', function () {
+    info_temperatura.setAttribute('visible', "false");
+      b_temp.setAttribute('material','color:blue');
+  });
+
+  var b_umi = sceneEl.querySelector('#bot_umidade');
+  b_umi.addEventListener('mouseenter', function () {
+    info_umidade.setAttribute('visible', "true");
+    b_umi.setAttribute('material','color:white');
+  });
+  b_umi.addEventListener('mouseleave', function () {
+    info_umidade.setAttribute('visible', "false");
+      b_umi.setAttribute('material','color:blue');
+  });
+
+  var b_dist = sceneEl.querySelector('#bot_dist');
+  b_dist.addEventListener('mouseenter', function () {
+    info_distancia.setAttribute('visible', "true");
+    b_dist.setAttribute('material','color:white');
+  });
+  b_dist.addEventListener('mouseleave', function () {
+    info_distancia.setAttribute('visible', "false");
+      b_dist.setAttribute('material','color:blue');
+  });
 
     </script>
 
