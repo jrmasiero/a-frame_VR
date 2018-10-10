@@ -18,6 +18,9 @@
       <a-assets>
 
   <a-asset-item id="dblab" src="../3d/4_0.gltf"></a-asset-item>
+
+  <a-asset-item id="storm" src="../3d/scene.gltf"></a-asset-item>
+
 <video id="intro" src="../3d/DBLab.webm"></video>
 </a-assets>
 
@@ -63,26 +66,26 @@
 
 
 
-
+        <a-entity id="trooper" gltf-model="#storm" rotation="0.0 90.0 0.0" position="-4.0 0.0 0.0" scale="0.5 0.5 0.5" animation-mixer="loop:repeat"></a-entity>
 
 
 
               <!controle video>
-        <a-entity id="controle_video" geometry="primitive: box" material="color: red; opacity: 0.5" position="-0.6 1.0 1.7" scale="0.2 0.2 0.2"  ></a-entity>
+        <a-entity id="controle_video" geometry="primitive: box" material="color: red; opacity: 0.5" position="-0.6 1.65 1.7" scale="0.2 0.2 0.2"  ></a-entity>
 
         <!controle temperatura>
   <a-entity id="bot_temp" geometry="primitive: box" material="color: blue; opacity: 0.5" position="0 0.9 0.2" scale="0.2 0.2 0.2"  ></a-entity>
-  <a-text id="temperatura" value="Temperatura" color="#0077be"
-    position="0.2 0.8 0.05" scale="0.6 0.6 0.6" rotation="0 180 0" visible="false"></a-text>
+  <a-text id="temperatura" value="Temperatura" color="white"
+    position="0.2 0.8 0.02" scale="0.6 0.6 0.6" rotation="0 180 0" visible="false"></a-text>
 
     <!controle umidade>
     <a-entity id="bot_umidade" geometry="primitive: box" material="color: blue; opacity: 0.5" position="-2.5 1.1 0.85" scale="0.2 0.2 0.2"  ></a-entity>
-    <a-text id="umidade" value="Umidade" color="#0077be"
-      position="-2.5 1.1 0.6" scale="0.8 0.8 0.8" rotation="0 130 0" visible="false"></a-text>
+    <a-text id="umidade" value="Umidade" color="#white"
+      position="-2.5 1.1 0.7" scale="0.8 0.8 0.8" rotation="0 130 0" visible="false"></a-text>
 
       <!controle distancia>
       <a-entity id="bot_dist" geometry="primitive: box" material="color: blue; opacity: 0.5" position="2.1 1.1 0.2" scale="0.2 0.2 0.2"  ></a-entity>
-      <a-text id="distancia" value="Distancia" color="#0077be"
+      <a-text id="distancia" value="Distancia" color="#white"
         position="2.1 0.9 -0.5" scale="0.7 0.7 0.7" rotation="0 -90 0" visible="false"></a-text>
 
 
