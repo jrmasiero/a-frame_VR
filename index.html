@@ -42,7 +42,7 @@
       <a-entity id="room" gltf-model="#dblab"  position="0 0 0" animation-mixer="loop:repeat"></a-entity>
 
       <!Teto para baixo>
-      <a-light type="directional" position="-2 2 0" rotation="0 0 0" intensity="2.0" target="#directional_0">
+      <a-light type="directional" position="-2 2 0" rotation="0 0 0" intensity="2.0" target="#directional_0" >
       <a-entity id="directional_0" position="2 -1 0"></a-entity>
       </a-light>
       <!Teto para baixo>
@@ -75,19 +75,43 @@
         <a-entity id="controle_video" geometry="primitive: box" material="color: red; opacity: 0.5" position="-0.6 1.65 1.7" scale="0.2 0.2 0.2"  ></a-entity>
 
         <!controle temperatura>
-  <a-entity id="bot_temp" geometry="primitive: box" material="color: blue; opacity: 0.5" position="0 0.9 0.2" scale="0.2 0.2 0.2"  ></a-entity>
+  <a-entity id="bot_temp" geometry="primitive: box" material="color: blue; opacity: 0.8" position="0 0.9 0.2" scale="0.2 0.2 0.2">
+    <a-animation attribute="material.color" begin="fadein" from="blue" to="red" dur="1000"></a-animation>
+    <a-animation attribute="position" begin="fadein" from="0 0.9 0.2" to="0 1.1 0.2" dur="1000"></a-animation>
+    <a-animation attribute="rotation" begin="fadein" from="0 0 0" to="0 180 0" dur="1000"></a-animation>
+    <a-animation attribute="material.color" begin="fadeout" from="red" to="blue" dur="1000"></a-animation>
+    <a-animation attribute="position" begin="fadeout"  from="0 1.1 0.2" to="0 0.9 0.2" dur="1000"></a-animation>
+    <a-animation attribute="rotation" begin="fadeout"  from="0 180 0" to="0 0 0" dur="1000"></a-animation>
+  </a-entity>
   <a-text id="temperatura" value="Temperatura" color="white"
-    position="0.2 0.8 0.02" scale="0.6 0.6 0.6" rotation="0 180 0" visible="false"></a-text>
+    position="0.2 0.9 0.15" scale="0.3 0.3 0.3" rotation="0 180 0" visible="false">
+
+  </a-text>
 
     <!controle umidade>
-    <a-entity id="bot_umidade" geometry="primitive: box" material="color: blue; opacity: 0.5" position="-2.5 1.1 0.85" scale="0.2 0.2 0.2"  ></a-entity>
+    <a-entity id="bot_umidade" geometry="primitive: box" material="color: blue; opacity: 0.5" position="-2.5 1.1 0.85" scale="0.2 0.2 0.2" >
+      <a-animation attribute="material.color" begin="fadein" from="blue" to="red" dur="1000"></a-animation>
+      <a-animation attribute="position" begin="fadein" from="-2.5 1.1 0.85" to="-2.5 1.3 0.85" dur="1000"></a-animation>
+      <a-animation attribute="rotation" begin="fadein" from="0 0 0" to="0 180 0" dur="1000"></a-animation>
+      <a-animation attribute="material.color" begin="fadeout" from="red" to="blue" dur="1000"></a-animation>
+      <a-animation attribute="position" begin="fadeout"  from="-2.5 1.3 0.85" to="-2.5 1.1 0.85" dur="1000"></a-animation>
+      <a-animation attribute="rotation" begin="fadeout"  from="0 180 0" to="0 0 0" dur="1000"></a-animation>
+
+    </a-entity>
     <a-text id="umidade" value="Umidade" color="#white"
       position="-2.5 1.1 0.7" scale="0.8 0.8 0.8" rotation="0 130 0" visible="false"></a-text>
 
       <!controle distancia>
-      <a-entity id="bot_dist" geometry="primitive: box" material="color: blue; opacity: 0.5" position="2.1 1.1 0.2" scale="0.2 0.2 0.2"  ></a-entity>
-      <a-text id="distancia" value="Distancia" color="#white"
-        position="2.1 0.9 -0.5" scale="0.7 0.7 0.7" rotation="0 -90 0" visible="false"></a-text>
+      <a-entity id="bot_dist" geometry="primitive: box" material="color: blue; opacity: 0.5" position="2.1 1.1 0.2" scale="0.2 0.2 0.2">
+        <a-animation attribute="material.color" begin="fadein" from="blue" to="red" dur="1000"></a-animation>
+        <a-animation attribute="position" begin="fadein" from="2.1 1.1 0.2" to="2.1 1.3 0.2" dur="1000"></a-animation>
+        <a-animation attribute="rotation" begin="fadein" from="0 0 0" to="0 180 0" dur="1000"></a-animation>
+        <a-animation attribute="material.color" begin="fadeout" from="red" to="blue" dur="1000"></a-animation>
+        <a-animation attribute="position" begin="fadeout"  from="2.1 1.3 0.2" to="2.1 1.1 0.2" dur="1000"></a-animation>
+        <a-animation attribute="rotation" begin="fadeout"  from="0 180 0" to="0 0 0" dur="1000"></a-animation>
+      </a-entity>
+      <a-text id="distancia" value="Distancia" color="#white" position="2.1 0.9 -0.5"  rotation="0 -90 0" visible="false">
+      </a-text>
 
 
 
@@ -196,33 +220,44 @@ function onMessageArrived(message) {
 }
 
   var b_temp = sceneEl.querySelector('#bot_temp');
-  b_temp.addEventListener('mouseenter', function () {
+  b_temp.addEventListener('click', function () {
+    if(info_temperatura.getAttribute("visible")==false){
+    b_temp.emit('fadein');
     info_temperatura.setAttribute('visible', "true");
-    b_temp.setAttribute('material','color:white');
-  });
-  b_temp.addEventListener('mouseleave', function () {
+    console.log(info_temperatura.getAttribute("visible"));
+  } else {
+    b_temp.emit('fadeout');
     info_temperatura.setAttribute('visible', "false");
-      b_temp.setAttribute('material','color:blue');
+    console.log(info_temperatura.getAttribute("visible"));
+  }
+
   });
 
+
   var b_umi = sceneEl.querySelector('#bot_umidade');
-  b_umi.addEventListener('mouseenter', function () {
+  b_umi.addEventListener('click', function () {
+    if(info_umidade.getAttribute("visible")==false){
+    b_umi.emit('fadein');
     info_umidade.setAttribute('visible', "true");
-    b_umi.setAttribute('material','color:white');
-  });
-  b_umi.addEventListener('mouseleave', function () {
+    console.log(info_umidade.getAttribute("visible"));
+  } else {
+    b_umi.emit('fadeout');
     info_umidade.setAttribute('visible', "false");
-      b_umi.setAttribute('material','color:blue');
+    console.log(info_umidade.getAttribute("visible"));
+  }
   });
 
   var b_dist = sceneEl.querySelector('#bot_dist');
-  b_dist.addEventListener('mouseenter', function () {
+  b_dist.addEventListener('click', function () {
+    if(info_distancia.getAttribute("visible")==false){
+    b_dist.emit('fadein');
     info_distancia.setAttribute('visible', "true");
-    b_dist.setAttribute('material','color:white');
-  });
-  b_dist.addEventListener('mouseleave', function () {
+    console.log(info_distancia.getAttribute("visible"));
+  } else {
+    b_dist.emit('fadeout');
     info_distancia.setAttribute('visible', "false");
-      b_dist.setAttribute('material','color:blue');
+    console.log(info_distancia.getAttribute("visible"));
+  }
   });
 
     </script>
