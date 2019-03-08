@@ -211,7 +211,7 @@ client.connect(options);
 // called when the client connects
 function onConnect() {
   client.subscribe("dblab/hands-on/mqtt/display");
-  client.subscribe("dblab/mqtt/light2/status");
+  client.subscribe("dblab/mqtt/light/status");
   //console.log("data   ", new Date());
 }
 
@@ -227,7 +227,7 @@ var luz_ligada;
 function onMessageArrived(message) {
   //console.log(message.destinationName);
 
-  if(message.destinationName == "dblab/mqtt/light2/status"){
+  if(message.destinationName == "dblab/mqtt/light/status"){
     if(message.payloadString.toString() == '0'){
       //console.log("DESLIGADO")
       luz_ligada = false;
@@ -259,13 +259,13 @@ function onMessageArrived(message) {
 function onLight(){
 
   let message = new Paho.MQTT.Message("on");
-  message.destinationName = "dblab/mqtt/light2/switch";
+  message.destinationName = "dblab/mqtt/light/switch";
   client.send(message);
 }
 
 function offLight(){
   let message = new Paho.MQTT.Message("off");
-  message.destinationName = "dblab/mqtt/light2/switch";
+  message.destinationName = "dblab/mqtt/light/switch";
   client.send(message);
 }
 
